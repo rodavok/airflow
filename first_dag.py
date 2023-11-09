@@ -1,6 +1,7 @@
 import json
 import pathlib
 import airflow
+import pendulum
 import requests
 import requests.exceptions as requests_exceptions
 from airflow import DAG
@@ -9,8 +10,8 @@ from airflow.operators.python import PythonOperator
 
 dag = DAG(
     dag_id="download_rocket_launches",
-    start_date=airflow.utils.dates.days_ago(14),
-    schedule_interval=None,
+    start_date=pendulum.today('utc').add(days=-14),
+    schedule=None,
     )
 
 download_launches = BashOperator(
